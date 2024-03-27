@@ -5,6 +5,7 @@ import numpy as np
 from controller import DrawObject
 global_draw_object = DrawObject()
 
+global_detection = False
 
 ap = argparse.ArgumentParser()
 
@@ -71,7 +72,7 @@ COLORS = np.random.uniform(0, 255, size=(len(classes), 3))
 net = cv2.dnn.readNet(args.weights, args.config)
 
 while True:
-
+    global_detection = False
     (grabbed, frame) = camera.read()
 
     frame = frame.copy()
@@ -129,8 +130,11 @@ while True:
                 if x < point < x + w:
                     for point_y in range(global_draw_object.initial_y, global_draw_object.final_y):
                         if y < point_y < y + h:
-                            print("Está dentro ", point)
+                            global_detection = True
             draw_prediction(frame, class_ids[i], confidences[i], round(x), round(y), round(x+w), round(y+h))
+
+    if global_detection:
+        cv2.putText(frame, "INVASOR DETECTADO", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
     cv2.imshow("Frame", frame)
     key = cv2.waitKey(1) & 0xFF
