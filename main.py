@@ -10,7 +10,7 @@ global_detection = False
 ap = argparse.ArgumentParser()
 
 ap.add_argument('-v', '--video', required=True,
-                help = 'path to input device')
+                help = 'number to input device')
 
 ap.add_argument('-c', '--config', required=True,
                 help = 'path to yolo config file')
@@ -25,6 +25,12 @@ args = ap.parse_args()
 
 
 # Camera configuration
+
+try:
+    args.video = int(args.video)
+except:
+    raise Exception("Invalid video input - make sure it is and integer number")
+
 camera = cv2.VideoCapture(args.video)
 original_fps = int(camera.get(cv2.CAP_PROP_FPS))
 
