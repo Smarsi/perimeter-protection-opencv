@@ -31,3 +31,9 @@ Change "/dev/video0" for your camera number
 > py main.py --video 0 --config .\yolov3.cfg --classes .\yolov3.txt --weights .\yolov3.weights
 
 Change "--video 0" for your camera number on windows
+
+
+### How to use
+
+When program starts you need to draw a protected area on the image using the mouse (just click and drag to draw a rectangle).
+Every time a intrusor get shot inside this protected area the system will write "Invasor detectado" on the screen.
